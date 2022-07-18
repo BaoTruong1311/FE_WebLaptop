@@ -1,0 +1,110 @@
+.category {
+    padding: 150px 0px;
+    display: flex;
+    width: 1400px;
+
+}
+
+.category-right {
+    width: 20%;
+}
+
+
+.category-right .category-right-trademark {
+    padding: 0px 20px;
+}
+
+.category-right .category-right-trademark .category-right-trademark-top {
+    font-size: 26px;
+    color: black;
+    letter-spacing: 2px;
+    font-weight: 400;
+
+}
+
+.category-right .category-right-trademark .category-right-trademark-item {
+    display: block
+}
+
+.category-right .category-right-trademark .category-right-trademark-item p input {
+    margin: 10px 10px 0px 0px;
+    font-size: 14px;
+
+}
+
+.category-right .category-right-price {
+    padding: 0px 20px;
+}
+
+.category-right .category-right-price .category-right-price-top {
+    font-size: 26px;
+    color: black;
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin-top: 30px;
+
+}
+
+.category-right .category-right-price .category-right-price-item p input {
+    margin: 10px 10px 0px 0px;
+
+}
+
+.category-right .category-right-price button {
+    padding: 5px 20px;
+    color: #5AABF8;
+    border: 1px solid #5AABF8;
+    border-radius: 5px;
+    background: #fff;
+    transition: all 0.3s ease;
+    letter-spacing: 2px;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.category-right .category-right-price button:hover {
+    padding: 5px 20px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background: #5AABF8;
+
+}
+
+.category-left {
+    width: 80%;
+}
+
+.category-left .category-left-tilte {
+    font-size: 26px;
+    color: black;
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin-left: 40px;
+}
+
+.category-left .section-products .single-product {
+    margin-bottom: 26px;
+    padding: 0px;
+}
+
+/* ---------product-category-------- */
+.category-left-product {
+    margin-top: 20px;
+}
+
+.category-left-product .part-1 ul {
+    left: 0 !important;
+    width: 100%;
+}
+
+.category-left-product .part-1 ul li {
+    width: 100%;
+    padding: 0px 20px;
+    cursor: pointer;
+}
+
+.category-left-product .part-1 ul li i {
+    width: 100% !important;
+    padding: 0px 20px;
+}

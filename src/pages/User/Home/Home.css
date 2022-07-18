@@ -1,0 +1,261 @@
+.background img {
+    width: 100%;
+    height: 600px;
+    position: fixed;
+
+
+}
+
+.container {
+
+    width: 100%;
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+    color: #444444;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.section-products {
+    padding: 50px 0 0px;
+}
+
+.section-products .header-section {
+    margin-bottom: 50px;
+}
+
+.section-products .header-section h3 {
+    font-size: 1rem;
+    color: #fe302f;
+    font-weight: 500;
+}
+
+.section-products .header-section h2 {
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: #444444;
+}
+
+.section-products .single-product {
+    margin-bottom: 26px;
+    padding: 20px;
+}
+
+.section-products .single-product .part-1 {
+    position: relative;
+    height: 200px;
+    max-height: 200px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.section-products .single-product .part-1::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: all 0.3s;
+}
+
+.section-products .single-product:hover .part-1 img {
+    transform: scale(1.2, 1.2) rotate(5deg);
+}
+
+.section-products #product-1 .part-1 img {
+    width: 100%;
+    height: 100%;
+}
+
+.section-products #product-1 .part-1 img {
+
+    background-size: cover;
+    transition: all 0.3s;
+}
+
+
+.section-products #product-3 .part-1 img {
+
+    background-size: cover;
+}
+
+
+
+.section-products .single-product .part-1 .discount,
+.section-products .single-product .part-1 .new {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #ffffff;
+    background-color: #fe302f;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.section-products .single-product .part-1 .new {
+    left: 0;
+    background-color: #444444;
+}
+
+.section-products .single-product .part-1 ul {
+    position: absolute;
+    bottom: -41px;
+    left: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    opacity: 0;
+    transition: bottom 0.5s, opacity 0.5s;
+}
+
+.section-products .single-product:hover .part-1 ul {
+    bottom: 30px;
+    opacity: 1;
+}
+
+.section-products .single-product .part-1 ul li {
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.section-products .single-product .part-1 ul li i {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #ffffff;
+    color: #444444;
+    text-align: center;
+    box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
+    transition: color 0.2s;
+}
+
+.section-products .single-product .part-1 ul li i:hover {
+    color: #fe302f;
+}
+
+.section-products .single-product .part-2 .product-title {
+    font-size: 1rem;
+}
+
+.section-products .single-product .part-2 h4 {
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.section-products .single-product .part-2 .product-old-price {
+    position: relative;
+    padding: 0 7px;
+    margin-right: 2px;
+    opacity: 0.6;
+}
+
+.section-products .single-product .part-2 .product-old-price::after {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #444444;
+    transform: translateY(-50%);
+}
+
+.slider-row {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+}
+
+.height {
+    height: 3321px;
+    background: #fff;
+}
+
+/* conatiner */
+.container2 .section-products {
+    padding: 0;
+}
+
+.container3 .section-products {
+    padding: 0;
+}
+
+.container2 .section-products .container .text-center {
+    margin-top: 60px !important;
+}
+
+.container3 .section-products .container .text-center {
+    margin-top: 120px !important;
+}
+
+
+
+.container .section-products .container {
+    width: 96%;
+}
+
+.slick-slider .slick-arrow::before {
+    color: #444444;
+
+
+}
+
+.slick-prev.slick-disabled::before {
+    opacity: 1;
+}
+
+.container-product {
+    width: 100%;
+    background: #fff;
+    margin-top: 600px;
+    position: absolute;
+}
+
+/* //background */
+.background {
+    position: relative;
+    padding-top: 82px;
+}
+
+.background h2 {
+    position: absolute;
+    color: #fff;
+    font-size: 70px;
+
+    left: 38%;
+    margin-top: 105px;
+    letter-spacing: 3px;
+}
+
+.background h4 {
+    color: #fff;
+    top: 5;
+    left: 36%;
+    top: 100%;
+    position: absolute;
+    margin-top: 202px;
+    line-height: 22px;
+    letter-spacing: 6px;
+    font-weight: 100;
+    font-size: 18px;
+}
+
+.background button {
+    position: absolute;
+    margin-top: 230px;
+    left: 46%;
+    padding: 10px 26px;
+}
