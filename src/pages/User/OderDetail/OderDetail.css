@@ -1,0 +1,20 @@
+.OderDetail {
+    padding: 150px;
+}
+
+.OderDetail .OderDetail-top {
+    font-size: 50px;
+    text-align: center;
+}
+
+.OderDetail .OderDetail-content {
+    padding: 30px 100px;
+    border: 0.5px solid #ebe9e9;
+    background: #f9f9f9;
+
+}
+
+.OderDetail-content-item {
+    display: flex;
+    justify-content: space-between;
+}

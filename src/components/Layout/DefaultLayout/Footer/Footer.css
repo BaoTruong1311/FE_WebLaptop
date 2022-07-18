@@ -1,0 +1,12 @@
+.page-footer {
+    position: absolute;
+
+    border-color: #0dcaf0;
+
+    width: 100%;
+    color: #7F8183;
+    background: #212529;
+    font-weight: 100;
+    letter-spacing: 1px;
+    font-size: 15px;
+}
