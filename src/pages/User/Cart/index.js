@@ -1,5 +1,4 @@
 import "./Cart.css"
-import product1 from "../../../assets/image/product3.jpeg"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 function Cart() {
@@ -23,7 +22,7 @@ function Cart() {
                         <tbody>
                             <tr>
                                 <td>
-                                    <span><img src={product1} alt="" /></span>
+                                    <span><img src="../../../../public/assets/image/product1.jpeg" alt="" /></span>
                                     <span>Laptop Asus VivoBook X509MA N5030/4GB/512GB/Win10 (EJ256T).</span>
                                 </td>
                                 <td>	9.890.000đ</td>
@@ -40,7 +39,7 @@ function Cart() {
                             </tr>
                             <tr>
                                 <td>
-                                    <span><img src={product1} alt="" /></span>
+                                    <span><img src="../../../../public/assets/image/product1.jpeg" alt="" /></span>
                                     <span>Laptop Asus VivoBook X509MA N5030/4GB/512GB/Win10 (EJ256T)</span>
                                 </td>
                                 <td>	9.890.000đ</td>

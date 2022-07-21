@@ -5,12 +5,9 @@ import CategoryDataService from "../../../services/CategoryServices"
 import { useEffect } from "react"
 function Categorys() {
     const [products, setProucts] = useState([])
-    const [filter, setfilter] = useState([])
     let { id } = useParams();
     useEffect(() => {
         getCategoryById(id)
-
-
     }, [products])
     const getCategoryById = (id) => {
         CategoryDataService.getCategoryById(id)
@@ -20,20 +17,31 @@ function Categorys() {
             .catch((e) => console.log(e))
 
     }
-    useEffect(() => {
-        handleCategory()
-    }, [filter])
-    const handleCategory = () => {
+
+    const handleCategory1 = () => {
         CategoryDataService.getProductBy5To10()
             .then((res) => {
-                setfilter(res.data)
+                setProucts(res.data)
+                console.log(res.data);
             })
             .catch((e) => console.log(e))
     }
-
-
-
-
+    const handleCategory2 = () => {
+        CategoryDataService.getProductBy10To20()
+            .then((res) => {
+                setProucts(res.data)
+                console.log(res.data);
+            })
+            .catch((e) => console.log(e))
+    }
+    const handleCategory3 = () => {
+        CategoryDataService.getProductByUnder20()
+            .then((res) => {
+                setProucts(res.data)
+                console.log(res.data);
+            })
+            .catch((e) => console.log(e))
+    }
     return (
         <>
 
@@ -56,12 +64,16 @@ function Categorys() {
                     <div className="category-right-price">
                         <div className="category-right-price-top">Giá</div>
                         <div className="category-right-price-item">
-                            <p><input type="radio"
-                                onClick={handleCategory}
+                            <p><input type="checkbox"
+                                onClick={handleCategory1}
 
                             />{"từ 5 triệu đến 10 triệu"}</p>
-                            <p>  <input type="radio" />{"từ 10 triệu đến 20 triệu"}</p>
-                            <p>  <input type="radio" />{"trên 20 triệu"}</p>
+                            <p>  <input type="checkbox"
+                                onClick={handleCategory2}
+                            />{"từ 10 triệu đến 20 triệu"}</p>
+                            <p>  <input type="checkbox"
+                                onClick={handleCategory3}
+                            />{"trên 20 triệu"}</p>
                         </div>
                         <button>Áp dụng</button>
                     </div>

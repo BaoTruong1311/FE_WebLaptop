@@ -3,14 +3,9 @@ import "./Home.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import logo from "../../../assets/image/background1.jpg"
-import product1 from "../../../assets/image/product3.jpeg"
-import product2 from "../../../assets/image/produc2.jpeg"
 import { Link } from "react-router-dom";
 import ProductDataServices from "../../../services/HomeService";
 import { useEffect, useState } from "react";
-
-const products = Array.from({ length: 16 * 1 }, (_, i) => i)
 
 
 
@@ -68,7 +63,7 @@ function Home() {
 
             {/* background */}
             <div className="background">
-                <img src={logo} alt="day la anh" />
+                <img src="/assets/image/background1.jpg" alt="day la anh" />
                 <h2>KooL-PaN</h2>
                 <h4>Đem Laptop đến với mọi người</h4>
                 {/* <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
@@ -86,6 +81,8 @@ function Home() {
                                         <h3>Cửa Hàng Laptop</h3>
                                         <h2>Sản Phẩm Mới</h2>
                                     </div>
+
+
                                 </div>
                             </div>
 
@@ -95,8 +92,8 @@ function Home() {
                                         <div class="">
                                             <div id="product-1" class="single-product">
                                                 <div class="part-1">
-                                                    <Link to={`/productdetail`}>
-                                                        <img style={{ cursor: "pointer" }} src={product1} alt="" /></Link>
+                                                    <Link to={`/productdetail/${produc.id}`}>
+                                                        <img style={{ cursor: "pointer" }} src="/assets/image-product/:upload:2022:7:636330306635691141_800-1.jpg" alt="" /></Link>
                                                     <ul>
                                                         <li>  <Link to={`/cart`}>   <i style={{ cursor: "pointer" }} class="fas fa-shopping-cart"></i></Link></li>
                                                         <li><i class="fas fa-heart"></i></li>
@@ -139,7 +136,7 @@ function Home() {
                                             <div id="product-1" class="single-product">
                                                 <div class="part-1">
                                                     <Link to={`/productdetail`}>
-                                                        <img style={{ cursor: "pointer" }} src={product2} alt="" /></Link>
+                                                        <img style={{ cursor: "pointer" }} src="/assets/image/product1.jpeg" alt="" /></Link>
                                                     <ul>
                                                         <li>  <Link to={`/cart`}>   <i style={{ cursor: "pointer" }} class="fas fa-shopping-cart"></i></Link></li>
                                                         <li><i class="fas fa-heart"></i></li>
@@ -179,7 +176,7 @@ function Home() {
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div id="product-1" class="single-product">
                                             <div class="part-1">
-                                                <img src={product1} alt="" />
+                                                <img src="/assets/image/product1.jpeg" alt="" />
                                                 <ul>
                                                     <li><i class="fas fa-shopping-cart"></i></li>
                                                     <li><i class="fas fa-heart"></i></li>
