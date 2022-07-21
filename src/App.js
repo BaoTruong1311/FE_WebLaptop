@@ -1,7 +1,7 @@
 
 import './App.css';
 import { Routes, Route } from "react-router-dom";
-import { publicRoutes } from "./routers"
+import { privateRoutes, publicRoutes } from "./routers"
 import DefaultLayout from './components/Layout/DefaultLayout';
 function App() {
   return (
@@ -10,9 +10,31 @@ function App() {
         {publicRoutes.map((route, index) => {
           const Layout = route.layout || DefaultLayout;
           const Page = route.component
-          return <Route key={index} path={route.path} element={
-            <Layout> <Page /></Layout>
-          } />
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Layout>
+                  <Page />
+                </Layout>
+              } />
+          )
+        })}
+        {privateRoutes.map((route, index) => {
+          const Layout = route.layout || DefaultLayout;
+          const Page = route.component
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Layout>
+                  <Page />
+                </Layout>
+              }
+            />
+          )
         })}
       </Routes>
     </>
