@@ -21,8 +21,8 @@ const publicRoutes = [
     { path: '/oder', component: Oder },
 
 
-    { path: '/login', component: Login },
-    { path: "/register", component: Register }
+    { path: '/login', component: Login, layout: null },
+    { path: "/register", component: Register, layout: null }
 
 
 ]

@@ -1,8 +1,20 @@
 import "./Cart.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import CartService from "../../../services/CartService"
 function Cart() {
     const [count, setCount] = useState(1)
+
+    const [cart, setCart] = useState([])
+    const getCart = () => {
+        CartService.getCart().then((res) => {
+            setCart(res.data.cartItems)
+        })
+    }
+    useEffect(() => {
+        getCart();
+
+    })
     return (
         <div className="container cart">
             <div className="cart-top">
@@ -19,42 +31,29 @@ function Cart() {
                                 <th scope="col">Sản phẩm</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span><img src="../../../../public/assets/image/product1.jpeg" alt="" /></span>
-                                    <span>Laptop Asus VivoBook X509MA N5030/4GB/512GB/Win10 (EJ256T).</span>
-                                </td>
-                                <td>	9.890.000đ</td>
-                                <td>
-                                    <div className="btn">
-                                        <button onClick={() => setCount(count - 1)}>-</button>
-                                        <span>{count}</span>
-                                        <button onClick={() => setCount(count + 1)}>+</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span>	9.890.000đ</span>
-                                    <span>&times;</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span><img src="../../../../public/assets/image/product1.jpeg" alt="" /></span>
-                                    <span>Laptop Asus VivoBook X509MA N5030/4GB/512GB/Win10 (EJ256T)</span>
-                                </td>
-                                <td>	9.890.000đ</td>
-                                <td>
-                                    <div className="btn">
-                                        <button>-</button>
-                                        <span>1</span>
-                                        <button>+</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span>	9.890.000đ</span>
-                                    <span>&times;</span></td>
-                            </tr>
-                        </tbody>
+                        {cart.map((c, index) => (
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span><img src={`/assets/image2/${c.product.imageLink1}`} alt="" /></span>
+                                        <span>{c.product.name}</span>
+                                    </td>
+                                    <td>	{c.product.originalPrice}</td>
+                                    <td>
+                                        <div className="btn">
+                                            <button onClick={() => setCount(count - 1)}>-</button>
+                                            <span>{count}</span>
+                                            <button onClick={() => setCount(count + 1)}>+</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span>	{c.product.originalPrice}</span>
+                                        <span>&times;</span></td>
+                                </tr>
+
+                            </tbody>
+                        ))}
+
                     </table>
                 </div>
                 <div className="cart-bottom-left">

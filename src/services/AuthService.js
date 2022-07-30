@@ -1,31 +1,34 @@
-import http from "./http-common";
+import http, { setAuthToken } from "./http-common";
 
 const register = (user) => {
-    return http.post("/auth/register", user);
+    return http.post(`/auth/register`, user);
 };
 
 const login = (username, password) => {
-    return http.post("/auth/signin", { username, password }).then((response) => {
+    return http.post(`/auth/login`, { username, password }).then((response) => {
         if (response.data.token) {
-            localStorage.setItem("user", JSON.stringify(response.data));
+            localStorage.setItem(`user1`, JSON.stringify(response.data));
+            setAuthToken(response.data.token)
         }
         return response.data;
+
     });
 };
 
 const logout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("user1");
 };
 
 const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem("user"));
+    return JSON.parse(localStorage.getItem(`user1`));
 };
 
 const AuthService = {
     register,
-    login,
-    logout,
     getCurrentUser,
+    login,
+    logout
+
 };
 
 export default AuthService;

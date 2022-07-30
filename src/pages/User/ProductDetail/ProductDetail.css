@@ -21,7 +21,7 @@
  .big-img img {
      width: inherit;
      height: inherit;
-     object-fit: cover;
+     object-fit: contain;
 
 
  }
@@ -32,8 +32,14 @@
      justify-content: space-between;
      width: 100%;
      margin-top: 15px;
+     object-fit: contain;
 
  }
+
+ .images img {
+     object-fit: contain;
+ }
+
 
  .small-img {
      width: 120px;
@@ -108,4 +114,17 @@
 
  .bottom .bottom-des .bottom-des-conttent {
      word-spacing: 3px;
+ }
+
+ .arlet {
+     width: 300px;
+     height: 60px;
+     background-color: #60c873;
+     text-align: center;
+     padding-top: 15px;
+     border-radius: 5px;
+     color: #fff;
+     letter-spacing: 1px;
+     font-size: 16px;
+     margin-top: 20px;
  }

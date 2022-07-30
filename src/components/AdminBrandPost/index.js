@@ -18,9 +18,7 @@ function AdminBrandPost() {
         }
         console.log(name, priority, status);
         BrandListDataService.postBrandList(brand).then((res) => {
-
         })
-
         alert(`You successfully added movie name${name}`)
         navigate("/admin/brand")
 
