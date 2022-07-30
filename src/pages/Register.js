@@ -1,8 +1,9 @@
 import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 import { isEmail, isEmpty } from 'validator';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import AuthService from '../services/AuthService';
+import { Navigate } from 'react-router-dom';
 const required = (value) => {
     if (!value) {
         return (
@@ -21,6 +22,16 @@ const vusername = (value) => {
         );
     }
 };
+const validEmail = (value) => {
+    if (!isEmail(value)) {
+        return (
+            <div className="alert alert-danger" role="alert">
+                This is not a valid email.
+            </div>
+        );
+    }
+};
+
 const vpassword = (value) => {
     if (value.length < 6 || value.length > 40) {
         return (
@@ -31,49 +42,84 @@ const vpassword = (value) => {
     }
 };
 function Register() {
-    const [email, setEmail] = useState('')
-    const [name, setName] = useState('')
-    const [password, setPassword] = useState('')
-    const [validationMgs, setValidationMgs] = useState({})
+    //huy
+    const form = useRef();
+    const checkBtn = useRef();
+    const [fullname, setFullname] = useState("");
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [phone, setPhone] = useState("");
 
-    const onChangeName = (e) => {
-        const value = e.target.value
-        setName(value)
-    }
+    const [successful, setSuccessful] = useState(false);
+    const [message, setMessage] = useState("");
+
+
+
+    useEffect(() => {
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            Navigate("/");
+
+        }
+    }, []);
+    const onChangefullname = (e) => {
+        const fullname = e.target.value;
+        setFullname(fullname);
+    };
+
+    const onChangeUsername = (e) => {
+        const username = e.target.value;
+        setUsername(username);
+    };
     const onChangeEmail = (e) => {
-        const value = e.target.value
-        setEmail(value)
-    }
+        const email = e.target.value;
+        setEmail(email);
+    };
+
     const onChangePassword = (e) => {
-        const value = e.target.value
-        setPassword(value)
-    }
-    const validationAll = () => {
-        const mgs = {}
-        if (isEmpty(email)) {
-            mgs.email = 'Please input your Email'
-        } else if (!isEmail(email)) {
-            mgs.email = 'Your Email is incorrect'
-        }
-        if (isEmpty(name)) {
-            mgs.name = 'Please input your Name'
-        }
-        if (isEmpty(password)) {
-            mgs.password = 'please input your Password'
-        }
-        setValidationMgs(mgs)
-        if (Object.keys(mgs).length > 0) return false
-        return true
+        const password = e.target.value;
+        setPassword(password);
+    };
 
-    }
-    const onSubmitRegister = () => {
-        const isValid = validationAll()
-        if (!isValid) return
+    const onChangePhone = (e) => {
+        const phone = e.target.value;
+        setPhone(phone);
+    };
 
-    }
-    const handleRegister = () => {
-
-    }
+    const handleRegister = (e) => {
+        e.preventDefault();
+        setMessage("");
+        setSuccessful(false);
+        form.current.validateAll();
+        if (checkBtn.current.context._errors.length === 0) {
+            const user = {
+                fullname,
+                username,
+                password,
+                email,
+                phone,
+                role: ["user"],
+            };
+            console.log(fullname, username, password, email, phone);
+            AuthService.register(user).then(
+                (response) => {
+                    setMessage(response.data.message);
+                    setSuccessful(true);
+                },
+                (error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    setMessage(resMessage);
+                    setSuccessful(false);
+                }
+            );
+        }
+    };
     return (
         <div className='container' style={{ paddingTop: 200, paddingBottom: 100, backgroundColor: "#eee" }}>
             <section className="vh-100" >
@@ -84,90 +130,109 @@ function Register() {
                                 <div className="card-body p-md-5">
                                     <div className="row justify-content-center">
                                         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
                                             <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Register</p>
 
-                                            <Form onSubmit={handleRegister} className="mx-1 mx-md-4">
+                                            <Form onSubmit={handleRegister} className="mx-1 mx-md-4" ref={form}>
+                                                {!successful && (
+                                                    <div>
+                                                        <div className="d-flex flex-row align-items-center mb-4">
+                                                            <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                                                            <div className="form-outline flex-fill mb-0">
+                                                                <label className="form-label" htmlFor="name">Fullname</label>
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control"
+                                                                    name="fullname"
+                                                                    value={fullname}
+                                                                    onChange={onChangefullname}
+                                                                    validations={[required]}
 
-                                                <div className="d-flex flex-row align-items-center mb-4">
-                                                    <i className="fas fa-user fa-lg me-3 fa-fw"></i>
-                                                    <div className="form-outline flex-fill mb-0">
-                                                        <p className="tex-red-400 text-xs italic" style={{ fontSize: 14, fontStyle: "italic", color: "red" }}>{validationMgs.name}</p>
-                                                        <input
-                                                            type="name"
-                                                            id="name"
-                                                            name="name"
-                                                            autoComplete='name'
-                                                            className="form-control"
-                                                            onChange={onChangeName}
-                                                            validations={[required, vusername]}
-                                                        />
-                                                        <label className="form-label" for="name">Your Name</label>
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex flex-row align-items-center mb-4">
+                                                            <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                                                            <div className="form-outline flex-fill mb-0">
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control"
+                                                                    name="username"
+                                                                    value={username}
+                                                                    onChange={onChangeUsername}
+                                                                    validations={[required, vusername]}
+
+                                                                />
+                                                                <label className="form-label" htmlFor="name">Username</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="d-flex flex-row align-items-center mb-4">
+                                                            <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                                            <div className="form-outline flex-fill mb-0">
+
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control"
+                                                                    name="email"
+                                                                    value={email}
+                                                                    onChange={onChangeEmail}
+                                                                    validations={[required, validEmail]}
+
+                                                                />
+                                                                <label className="form-label" htmlFor="eamil">Your Email</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="d-flex flex-row align-items-center mb-4">
+                                                            <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                                            <div className="form-outline flex-fill mb-0">
+                                                                <input
+                                                                    type="password"
+                                                                    className="form-control"
+                                                                    name="password"
+                                                                    value={password}
+                                                                    onChange={onChangePassword}
+                                                                    validations={[required, vpassword]}
+                                                                />
+                                                                <label className="form-label" htmlFor="password">Password</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="d-flex flex-row align-items-center mb-4">
+                                                            <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                                            <div className="form-outline flex-fill mb-0">
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control"
+                                                                    name="phone"
+                                                                    value={phone}
+                                                                    onChange={onChangePhone} />
+                                                                <label className="form-label" htmlFor="password">Phone</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="form-check d-flex justify-content-center mb-5">
+                                                            <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                                                            <label className="form-check-label" htmlFor="form2Example3">
+                                                                I agree all statements in <a href="#!">Terms of service</a>
+                                                            </label>
+                                                        </div>
+
+                                                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                                            <button
+                                                                type="submit"
+                                                                className="btn btn-primary btn-lg">Register</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <div className="d-flex flex-row align-items-center mb-4">
-                                                    <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                                    <div className="form-outline flex-fill mb-0">
-                                                        <p className="tex-red-400 text-xs italic" style={{ fontSize: 14, fontStyle: "italic", color: "red" }}>{validationMgs.email}</p>
-                                                        <input
-                                                            type="email"
-                                                            id="email"
-                                                            name="email"
-                                                            className="form-control"
-                                                            autoComplete='email'
-                                                            onChange={onChangeEmail}
-
-                                                        />
-                                                        <label className="form-label" for="eamil">Your Email</label>
+                                                )}
+                                                {message && (
+                                                    <div className="form-group">
+                                                        <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert">
+                                                            {message}
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <div className="d-flex flex-row align-items-center mb-4">
-                                                    <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                                    <div className="form-outline flex-fill mb-0">
-                                                        <p className="tex-red-400 text-xs italic" style={{ fontSize: 14, fontStyle: "italic", color: "red" }}>{validationMgs.password}</p>
-                                                        <input
-                                                            type="password"
-                                                            id="password"
-                                                            name="password"
-                                                            onChange={onChangePassword}
-                                                            validations={[required, vpassword]}
-                                                            className="form-control" />
-                                                        <label className="form-label" for="password">Password</label>
-                                                    </div>
-                                                </div>
-
-                                                <div className="d-flex flex-row align-items-center mb-4">
-                                                    <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                                                    <div className="form-outline flex-fill mb-0">
-                                                        <p className="tex-red-400 text-xs italic" style={{ fontSize: 14, fontStyle: "italic", color: "red" }}>{validationMgs.password}</p>
-                                                        <input
-                                                            type="password"
-                                                            id="password"
-                                                            name="password"
-                                                            onChange={onChangePassword}
-                                                            className="form-control" />
-
-                                                        <label className="form-label" for="password">Repeat your password</label>
-                                                    </div>
-                                                </div>
-
-                                                <div className="form-check d-flex justify-content-center mb-5">
-                                                    <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                                                    <label className="form-check-label" for="form2Example3">
-                                                        I agree all statements in <a href="#!">Terms of service</a>
-                                                    </label>
-                                                </div>
-
-                                                <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-primary btn-lg"
-                                                        onClick={onSubmitRegister}
-                                                    >Register</button>
-                                                </div>
-
+                                                )}
+                                                <CheckButton style={{ display: "none" }} ref={checkBtn} />
                                             </Form>
 
                                         </div>
@@ -188,3 +253,4 @@ function Register() {
     )
 }
 export default Register
+

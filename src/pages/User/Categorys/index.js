@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom"
 import { useState } from "react"
 import CategoryDataService from "../../../services/CategoryServices"
 import { useEffect } from "react"
+import ReactPaginate from "react-paginate"
 function Categorys() {
     const [products, setProucts] = useState([])
     let { id } = useParams();
@@ -41,6 +42,26 @@ function Categorys() {
                 console.log(res.data);
             })
             .catch((e) => console.log(e))
+    }
+
+    const [currentItems, setCurrentItems] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
+    const itemsPerPage = 12;
+
+    useEffect(() => {
+        const endOffset = itemOffset + itemsPerPage;
+        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+        setCurrentItems(products.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(products.length / itemsPerPage));
+    }, [itemOffset, itemsPerPage, products]);
+
+    const handlePageClick = (e) => {
+        const newOffset = (e.selected * itemsPerPage) % products.length;
+        console.log(
+            `User requested page number ${e.selected}, which is offset ${newOffset}`
+        );
+        setItemOffset(newOffset);
     }
     return (
         <>
@@ -88,26 +109,43 @@ function Categorys() {
                                     <div class="row">
 
 
-                                        {products.map((produc, ind) => (
+                                        {currentItems.map((produc, ind) => (
                                             <div class="col-md-6 col-lg-4 col-xl-3">
                                                 <div id="product-1" class="single-product">
                                                     <div class="part-1">
-                                                        {/* <img src={require(`../../../assets/image-product/${produc.image}`)} alt="" /> */}
-                                                        <img src="../../../assets/image-product/:upload:2022:7:636330306635691141_800-1.jpg" alt="" />
+                                                        <Link to={`/productdetail/${produc.id}`}>
+                                                            <img src={`/assets/image2/${produc.imageLink1}`} alt="" />
+                                                        </Link>
 
                                                         <ul>
                                                             <li>  <Link to={`/cart`}>   <i style={{ cursor: "pointer" }} class="fas fa-shopping-cart"></i></Link></li>
 
                                                         </ul>
                                                     </div>
-                                                    <div class="part-2">
-                                                        <h3 class="product-title">{produc.name}</h3>
-                                                        <h4 class="product-price">{produc.originalPrice}</h4>
+                                                    <div class="part-2" style={{ cursor: "pointer" }}>
+                                                        <Link to={`/productdetail/${produc.id}`}>
+                                                            <h3 class="product-title">{produc.name}</h3>
+                                                            <h4 class="product-price">{produc.originalPrice}</h4>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
+                                    <ReactPaginate
+                                        breakLabel="..."
+                                        nextLabel=" >"
+                                        onPageChange={handlePageClick}
+                                        pageRangeDisplayed={5}
+                                        pageCount={pageCount}
+                                        previousLabel="< "
+                                        renderOnZeroPageCount={null}
+                                        containerClassName="pagination"
+                                        pageClassName="page-num"
+                                        previousLinkClassName="page-num"
+                                        nextLinkClassName="page-num"
+                                        activeLinkClassName="active"
+                                    />
                                 </div>
                             </section>
                         </div>
@@ -118,6 +156,7 @@ function Categorys() {
 
         </>
     )
+
 
 }
 export default Categorys

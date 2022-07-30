@@ -3,9 +3,11 @@ import "./Home.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
-import ProductDataServices from "../../../services/HomeService";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import AuthService from "../../../services/AuthService";
+import ReactPaginate from "react-paginate";
+import ProductListData from "../../../services/ProductListService";
 
 
 
@@ -46,15 +48,44 @@ function Home() {
     };
 
     const [product, setProduct] = useState([])
+    let navigate = useNavigate();
     useEffect(() => {
-        getAllProduct();
+        const currentUser = AuthService.getCurrentUser();
+        if (currentUser) {
+            if (currentUser.roles.includes("ROLE_ADMIN")) {
+                navigate("/admin/brand");
+
+                // window.location.reload();
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        getProductList();
     }, [])
-    const getAllProduct = () => {
-        ProductDataServices.getProductList()
-            .then((res) => {
-                setProduct(res.data);
-            })
-            .catch((e) => console.log(e));
+    const getProductList = () => {
+        ProductListData.getProductList().then((res) => {
+            setProduct(res.data.content)
+        })
+    }
+
+
+    const [currentItems, setCurrentItems] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
+    const itemsPerPage = 12;
+
+
+
+    useEffect(() => {
+        const endOffset = itemOffset + itemsPerPage;
+        setCurrentItems(product.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(product.length / itemsPerPage));
+    }, [itemOffset, itemsPerPage, product]);
+
+    const handlePageClick = (e) => {
+        const newOffset = (e.selected * itemsPerPage) % product.length;
+        setItemOffset(newOffset);
     }
 
     return (
@@ -63,7 +94,11 @@ function Home() {
 
             {/* background */}
             <div className="background">
-                <img src="/assets/image/background1.jpg" alt="day la anh" />
+                <img
+                    src="/assets/image/background1.jpg"
+                    alt="Not found"
+                />
+
                 <h2>KooL-PaN</h2>
                 <h4>Đem Laptop đến với mọi người</h4>
                 {/* <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
@@ -89,11 +124,13 @@ function Home() {
                             <div class="row">
                                 <Slider {...settings}>
                                     {product.map((produc, ind) => (
-                                        <div class="">
+                                        <div class="" key={{ ind }}>
                                             <div id="product-1" class="single-product">
                                                 <div class="part-1">
                                                     <Link to={`/productdetail/${produc.id}`}>
-                                                        <img style={{ cursor: "pointer" }} src="/assets/image-product/:upload:2022:7:636330306635691141_800-1.jpg" alt="" /></Link>
+                                                        <img src={`/assets/image2/${produc.imageLink1}`} alt="" />
+                                                    </Link>
+
                                                     <ul>
                                                         <li>  <Link to={`/cart`}>   <i style={{ cursor: "pointer" }} class="fas fa-shopping-cart"></i></Link></li>
                                                         <li><i class="fas fa-heart"></i></li>
@@ -102,9 +139,11 @@ function Home() {
                                                     </ul>
                                                 </div>
                                                 <div class="part-2">
-                                                    <h3 class="product-title">{produc.name}</h3>
-                                                    <h4 class="product-old-price">{produc.originalPrice}</h4>
-                                                    <h4 class="product-price">{produc.salePrice}</h4>
+                                                    <Link to={`/productdetail/${produc.id}`}>
+                                                        <h3 class="product-title">{produc.name}</h3>
+                                                        <h4 class="product-old-price">{produc.originalPrice}</h4>
+                                                        <h4 class="product-price">{produc.salePrice}</h4>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,11 +171,13 @@ function Home() {
                             <div class="row">
                                 <Slider {...settings}>
                                     {product.map((produc, ind) => (
-                                        <div class="col-md-6 col-lg-4 col-xl-3">
+                                        <div class="" key={{ ind }}>
                                             <div id="product-1" class="single-product">
                                                 <div class="part-1">
-                                                    <Link to={`/productdetail`}>
-                                                        <img style={{ cursor: "pointer" }} src="/assets/image/product1.jpeg" alt="" /></Link>
+                                                    <Link to={`/productdetail/${produc.id}`}>
+                                                        <img src={`/assets/image2/${produc.imageLink1}`} alt="" />
+                                                    </Link>
+
                                                     <ul>
                                                         <li>  <Link to={`/cart`}>   <i style={{ cursor: "pointer" }} class="fas fa-shopping-cart"></i></Link></li>
                                                         <li><i class="fas fa-heart"></i></li>
@@ -145,15 +186,17 @@ function Home() {
                                                     </ul>
                                                 </div>
                                                 <div class="part-2">
-                                                    <h3 class="product-title">{produc.name}</h3>
-                                                    <h4 class="product-old-price">{produc.originalPrice}</h4>
-                                                    <h4 class="product-price">{produc.salePrice}</h4>
+                                                    <Link to={`/productdetail/${produc.id}`}>
+                                                        <h3 class="product-title">{produc.imageLink2}</h3>
+                                                        <h4 class="product-old-price">{produc.originalPrice}</h4>
+                                                        <h4 class="product-price">{produc.salePrice}</h4>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
-                                </Slider>
 
+                                </Slider>
 
                             </div>
                         </div>
@@ -172,11 +215,11 @@ function Home() {
                                 </div>
                             </div>
                             <div class="row">
-                                {product.map((produc, ind) => (
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                {currentItems.map((produc, ind) => (
+                                    <div class="col-md-6 col-lg-4 col-xl-3" key={{ ind }}>
                                         <div id="product-1" class="single-product">
                                             <div class="part-1">
-                                                <img src="/assets/image/product1.jpeg" alt="" />
+                                                <img src={`/assets/image2/${produc.imageLink1}`} alt="" />
                                                 <ul>
                                                     <li><i class="fas fa-shopping-cart"></i></li>
                                                     <li><i class="fas fa-heart"></i></li>
@@ -196,6 +239,20 @@ function Home() {
 
 
                             </div>
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel=" >"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={5}
+                                pageCount={pageCount}
+                                previousLabel="< "
+                                renderOnZeroPageCount={null}
+                                containerClassName="pagination"
+                                pageClassName="page-num"
+                                previousLinkClassName="page-num"
+                                nextLinkClassName="page-num"
+                                activeLinkClassName="active"
+                            />
                         </div>
                     </section>
                 </div>
