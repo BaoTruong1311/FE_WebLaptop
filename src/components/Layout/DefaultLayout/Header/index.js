@@ -13,14 +13,7 @@ function Header() {
     const handleDropdown = () => {
         setDropdown(!dropdown)
     }
-
-
-    const [currentUser, setCurrentUser] = useState(() =>
-        AuthService.getCurrentUser(),
-
-    );
-
-
+    const currentUser = AuthService.getCurrentUser();
 
     useEffect(() => {
         getAllBrand();
@@ -32,9 +25,6 @@ function Header() {
             })
             .catch((e) => console.log(e));
     }
-
-
-
     const logOut = () => {
         AuthService.logout();
         navigate("/login")
@@ -42,19 +32,15 @@ function Header() {
     }
 
 
-
-
-
     // search
     const [searchValue, setSearchValue] = useState('')
     const [searchResult, setSearchResult] = useState([])
     const [showResult, setShowResult] = useState(true)
     const [product, setProduct] = useState([])
-    // useEffect(() => {
-    //     getAll();
+    useEffect(() => {
+        getAll();
 
-
-    // }, [])
+    }, [])
     const getAll = () => {
         ProductDetailDataService.getAll()
             .then((res) => {
@@ -82,13 +68,12 @@ function Header() {
         CartService.getCart().then((res) => {
             setCart(res.data.cartItems)
 
-
         })
     }
     useEffect(() => {
         getCart();
 
-    })
+    }, [])
     return (
 
         <div className="header">
@@ -158,7 +143,12 @@ function Header() {
                         <div className="cart-header">
                             <div className="cart-header-icon">
                                 <Link to={`/cart`}>   <i style={{ cursor: "pointer" }} class="fas fa-shopping-cart"></i></Link></div>
-                            <div className="cart-header-count">{count + cart.length}</div>
+
+                            {(currentUser ?
+                                (<div className="cart-header-count">{(cart.length)}</div>)
+                                :
+                                (<div className="cart-header-count">{count}</div>)
+                            )}
                         </div>
                     </div>
 

@@ -12,6 +12,7 @@ import ProductList from '../pages/Admin/ProductList/ProductList';
 import UserList from '../pages/Admin/UserList/UserList';
 import AdminLayout from '../components/Layout/AdminLayout';
 import AdminBrandPost from '../components/AdminBrandPost';
+import AdminProductPost from '../components/AdminProductPost';
 const publicRoutes = [
     { path: "/", component: Home },
     { path: '/categorys/:id', component: Categorys },
@@ -31,6 +32,7 @@ const privateRoutes = [
     { path: "/admin/brand/post", component: AdminBrandPost, layout: AdminLayout },
     { path: "/admin/Order", component: OrderList, layout: AdminLayout },
     { path: "/admin/Product", component: ProductList, layout: AdminLayout },
+    { path: "/admin/product/post", component: AdminProductPost, layout: AdminLayout },
     { path: "/admin/User", component: UserList, layout: AdminLayout }
 
 ]

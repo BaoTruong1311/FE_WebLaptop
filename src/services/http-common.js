@@ -7,6 +7,7 @@ export default axios.create({
     baseURL: API_URL,
     headers: {
         "Content-type": "application/json",
+        "Authorization": localStorage.getItem(`user1`) ? "Bearer " + JSON.parse(localStorage.getItem(`user1`)).token : ''
     },
 });
 export const setAuthToken = (token) => {
@@ -16,5 +17,4 @@ export const setAuthToken = (token) => {
         delete axios.defaults.headers.common['Authorization'];
     }
 }
-
 

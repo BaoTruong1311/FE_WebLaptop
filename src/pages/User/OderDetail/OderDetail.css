@@ -18,3 +18,17 @@
     display: flex;
     justify-content: space-between;
 }
+
+.OderDetail-bottom-conten {
+    width: 140px;
+    height: 24px;
+    /* border: 1px solid white; */
+    border-radius: 5px;
+    background: #46adff;
+    font-size: 14px;
+    font-style: inherit;
+    color: #fff;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 10px;
+}

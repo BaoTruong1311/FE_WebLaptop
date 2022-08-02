@@ -1,5 +1,9 @@
+import { useState } from "react"
+import { Link } from "react-router-dom"
 import "./OderDetail.css"
 function OderDetail() {
+
+
     return (
         <div className="container OderDetail">
             <div className="OderDetail-top">
@@ -38,6 +42,14 @@ function OderDetail() {
                     <p>9.890.000đ</p>
                 </div>
             </div>
+            <Link to={`/`}>
+                <div className="OderDetail-bottom">
+                    <div className="OderDetail-bottom-conten">
+                        quay về trang chủ
+
+                    </div>
+                </div>
+            </Link>
         </div>
     )
 }

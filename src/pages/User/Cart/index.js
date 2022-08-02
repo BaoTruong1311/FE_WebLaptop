@@ -2,19 +2,36 @@ import "./Cart.css"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import CartService from "../../../services/CartService"
+import AuthService from "../../../services/AuthService"
 function Cart() {
     const [count, setCount] = useState(1)
 
+    const [currentUser, setCurrentUser] = useState(() =>
+        AuthService.getCurrentUser(),
+    );
     const [cart, setCart] = useState([])
     const getCart = () => {
         CartService.getCart().then((res) => {
             setCart(res.data.cartItems)
+            console.log("Cart", res.data.cartItems);
         })
     }
+    const [total, setTotal] = useState([])
+    const getTotal = () => {
+        CartService.getCart().then((res) => {
+            setTotal(res.data.totalCost)
+            console.log("totalss", res.data.totalCost);
+        })
+    }
+
+
     useEffect(() => {
         getCart();
 
-    })
+    }, [])
+    useEffect(() => {
+        getTotal();
+    }, [])
     return (
         <div className="container cart">
             <div className="cart-top">
@@ -28,11 +45,11 @@ function Cart() {
                                 <th scope="col">Sản phẩm</th>
                                 <th scope="col">giá</th>
                                 <th scope="col">Số lượng</th>
-                                <th scope="col">Sản phẩm</th>
+
                             </tr>
                         </thead>
                         {cart.map((c, index) => (
-                            <tbody>
+                            <tbody key={index}>
                                 <tr>
                                     <td>
                                         <span><img src={`/assets/image2/${c.product.imageLink1}`} alt="" /></span>
@@ -46,9 +63,7 @@ function Cart() {
                                             <button onClick={() => setCount(count + 1)}>+</button>
                                         </div>
                                     </td>
-                                    <td>
-                                        <span>	{c.product.originalPrice}</span>
-                                        <span>&times;</span></td>
+
                                 </tr>
 
                             </tbody>
@@ -61,12 +76,13 @@ function Cart() {
                         <p className="cart-bottom-left-content-tilte">Thông tin giỏ hàng</p>
                         <div className="cart-bottom-left-content-sum">
                             <span>Tổng số sản phẩm:</span>
-                            <span>1</span>
+                            {(currentUser ? (<span>{cart.length}</span>) :
+                                <span>{0}</span>)}
                         </div>
                         <div className="cart-bottom-left-content-delivery">
                             <p>Chọn đơn vị giao hàng</p>
                             <div className="cart-bottom-left-content-delivery-top">
-                                <input type="radio" />{"Giao hàng tiết kiệm: "}
+                                <input type="radio" checked="checked" />{"Giao hàng tiết kiệm: "}
                                 <span>20.000 đ</span>
                             </div>
                             <div className="cart-bottom-left-content-delivery-bottom">
@@ -76,7 +92,9 @@ function Cart() {
                         </div>
                         <div className="cart-bottom-left-content-total">
                             <span>Tổng cộng</span>
-                            <span>9,890,000đ</span>
+                            <span>{total}</span>
+
+
                         </div>
                         <Link to={`/oder`}> <button>Đặt hàng</button></Link>
                     </div>

@@ -23,7 +23,7 @@ function ProductList() {
     return (
         <div className="movie-list-wrapper">
             <h2>Product List</h2>
-            <Link className="btn-add" to={"/admin/brand/post"}>
+            <Link className="btn-add" to={"/admin/product/post"}>
                 Create New Product
             </Link>
             <Table striped bordered hover>
@@ -35,7 +35,7 @@ function ProductList() {
                         <th>OriginalPrice</th>
                         <th>SalePrice</th>
                         <th>Stock</th>
-                        <th>Status</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +48,7 @@ function ProductList() {
                                 <td>{pr.originalPrice}</td>
                                 <td>{pr.salePrice}</td>
                                 <td>{pr.stock}</td>
-                                <td>{pr.status}</td>
+
                                 <td>
                                     <FontAwesomeIcon icon={faTrash}
                                     />
