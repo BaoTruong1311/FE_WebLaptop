@@ -18,16 +18,15 @@ const login = (username, password) => {
 const logout = () => {
     localStorage.removeItem("user1");
 };
-
 const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem(`user1`));
+    return localStorage.getItem(`user1`) ? JSON.parse(localStorage.getItem(`user1`)) : '';
 };
 
 const AuthService = {
     register,
-    getCurrentUser,
     login,
-    logout
+    logout,
+    getCurrentUser
 
 };
 

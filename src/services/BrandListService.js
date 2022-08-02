@@ -9,6 +9,7 @@ const deleteBrandList = (id) => {
 const postBrandList = (data) => {
     return httpCommon.post(`/admin/brand/insert`, data)
 }
+
 const BrandListDataService = {
     getBrandList,
     deleteBrandList,

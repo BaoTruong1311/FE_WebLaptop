@@ -55,7 +55,6 @@ function Home() {
             if (currentUser.roles.includes("ROLE_ADMIN")) {
                 navigate("/admin/brand");
 
-                // window.location.reload();
             }
         }
     }, []);
